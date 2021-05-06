@@ -1,21 +1,3 @@
-// console.log(document.getElementsByTagName("*"))
-class Tag {
-
-    constructor() {
-        this.name
-        this.inner
-
-        this.parent
-        this.children = []
-        this.attr = []
-    }
-
-    addChild(kid) {
-        kid.parent = this
-        this.children.push(kid)
-    }
-
-}
 
 function getNodesPerLevel(row) {
     return row <= 0 ? 1 : _getNodesPerLevel(document, row)
@@ -46,18 +28,13 @@ let recti = 0
 
 let canvas = document.querySelector('#canvas')
 let context = canvas.getContext("2d")
+
 context.textAlign = "center"
+
 const xs = 1500 / 2
 const ys = -150
-// var ys = 50
 var width = canvas.width
-// context.beginPath()
-// context.arc(xs, ys, 50, 0, Math.PI * 2)
-// context.font = "20px Arial";
-// context.fillText("HTML", xs - 5, ys);
-// context.stroke()
 var div = document.getElementsByTagName("div")
-
 let path = new Path2D()
 let path1 = new Path2D()
 var oX
@@ -98,7 +75,6 @@ window.addEventListener("load", function () {
 
                     indexOnLevel = []
                     level = 0
-                    // node(document.children, xs, ys + 200, 0)
                 }
                 node(document.children, xs, ys + 200, 0)
 
@@ -113,7 +89,6 @@ window.addEventListener("load", function () {
                 hY = XY.y
                 oX = 0
                 oY = 0
-                // console.log(hX)
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 indexOnLevel = []
                 level = 0
@@ -128,20 +103,7 @@ window.addEventListener("load", function () {
 var clicked = []
 var isClicked = false
 
-const getPath = (element) => element.parentElement == null ? "ROOT" : getPath(element.parentElement) + "->" + element.localName;
-
 var node = (g, x, y, level) => {
-    // pathStart = new Path2D() 
-    // context.beginPath()
-    // pathStart.rect(0, 0, canvas.width, canvas.height);
-    // context.fillStyle = "white"
-    // context.fill(pathStart)
-    // context.stroke(pathStart)
-    // context.beginPath()
-    // context.fillStyle = "white"
-    // context.rect(0, 0, canvas.width, canvas.height);
-    // context.fill()
-    // context.stroke()
 
     let num = getNodesPerLevel(level)
     let ch = width / num
@@ -156,29 +118,18 @@ var node = (g, x, y, level) => {
             var str = g[i].outerHTML.split('\n')
             const findLongest = () => Math.max(...(str.map(el => el.length)));
             context.beginPath()
-            // context.rect((ch / 2 + (indexOnLevel[level] * (ch))) - 30, y - 50, 60, 40);
             context.font = "20px monospace";
             context.textAlign = "start"
-
-            // context.beginPath()
             context.fillStyle = "rgba(0,0,0,0.6)"
             context.rect(hX, yy, context.measureText('-'.repeat(findLongest())).width, str.length * 20 + 20)
             context.fill()
 
             str.forEach(element => {
-
-                // path.fillStyle = "red"
                 context.fillStyle = "white"
                 context.fillText(element + '\n', hX, yy += 20);
-                // console.log(element)
-                // context.stroke()
-
-
             });
-            // context.fillText(g[i].outerHTML, (ch / 2 + (indexOnLevel[level] * ch)), y - 30);
             context.stroke()
             context.textAlign = "center"
-
         }
 
 
@@ -194,7 +145,6 @@ var node = (g, x, y, level) => {
 
             g[i]._newX = (ch / 2 + (indexOnLevel[level] * (ch))) - 30
             g[i]._newY = y - 50
-            g[i]._path = getPath(g[i])
 
             if (g[i].nodeType == Node.TEXT_NODE) {
                 path0 = new Path2D()
@@ -264,14 +214,10 @@ var node = (g, x, y, level) => {
                         let yAttr = y + (-30 * index);
                         context.fillStyle = "rgba(0,0,0,0.6)"
                         context.rect((ch / 2 + (indexOnLevel[level] * (ch))) - msg.length * 15, yAttr, msg.length * 15, 20)
-
                         context.fill()
                         context.fillStyle = "white"
-
                         context.fillText(msg, (ch / 2 + (indexOnLevel[level] * (ch))) - 100, yAttr + 16, 400);
-
                         context.stroke()
-
                     }
                 }
             }// End Attr
@@ -292,7 +238,6 @@ var node = (g, x, y, level) => {
 }
 node(document.children, xs, ys + 200, 0)
 
-// canvas.style.backgroundColor = "white"
 btn.onclick = function () {
     let a = document.createElement("a");
     document.body.appendChild(a);
@@ -300,5 +245,4 @@ btn.onclick = function () {
     a.download = "canvas-image.png";
     a.click();
     document.body.removeChild(a);
-
 }
